@@ -4,21 +4,21 @@
 	header('Content-Type: application/json; charset=utf-8');
 	
 	require_once '../../config/Conexao.php';
-	require_once '../../models/Categoria.php';
+	require_once '../../models/Post.php';
 
 	 if($_SERVER['REQUEST_METHOD'] == 'DELETE') {
     	$db = new Conexao();
     	$con = $db->getConexao();
 
-        $categoria = new Categoria($con);
+        $post = new Post($con);
         $dados = json_decode(file_get_contents("php://input"));
 
-        $categoria->id = $dados->id;
+        $post->id = $dados->id;
 
-        if($categoria->delete()) {
-        	$res = ['mensagem'=>'Categoria deletada'];
+        if($post->delete()) {
+        	$res = ['mensagem'=>'post deletado'];
         } else {
-        	$res = ['mensagem'=>'Erro na deletação da categoria'];
+        	$res = ['mensagem'=>'Erro na deletação da post'];
         }
     	echo json_encode($res);   
     }

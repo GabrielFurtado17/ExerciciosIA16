@@ -1,16 +1,23 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
+
 include_once '../config/Conexao.php';
 include_once '../models/Categoria.php';
+
+// Instancia o objeto de conexão
 $db = new Conexao();
 
-$cat = new Categoria($db->getConexao());
-// echo("GET:");
-// print_r($cat->read());
+// recebe a conexão feita
+$conexao = $db->getConexao();
 
-// echo("POST:");
-// $user = file_get_contents('php://input');
+// instancia o objeto categoria
+// passa a conexao
+$cat = new Categoria($conexao);
 
-echo("PUT:\n");
-$values = json_decode(file_get_contents('php://input'),true);
-$cat->update($values,$_GET['id']);
+// invoca o método read
+$resultado = $cat->read();
+
+$resultado2 = $cat->create();
+
+$resultado3 = $cat->update();
+
+print_r($resultado);

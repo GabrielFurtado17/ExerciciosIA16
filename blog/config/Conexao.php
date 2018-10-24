@@ -1,20 +1,30 @@
 <?php
 
-class Conexao{
-    private $host ='localhost';
-    private $dbname = 'meu_blog';
-    private $user = 'root';
-    private $passwd = '';
 
-    private $conexao;
+/*
+	Classe que contém os parâmetros para conexão e o método que retona a conexão
+*/
 
-    public function getConexao(){
-        $this->conexao = null;
-        try{
-            $this->conexao = new PDO('mysql:host='.$this->host.';dbname='.$this->dbname,$this->user,$this->passwd,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-        }catch(PDOException $e){
-            die("Erro na conexão: ".$e->getMessage());
-        }
-        return $this->conexao;
-    }
+class Conexao {
+	//credenciais de acesso ao BD
+	private $host = 'localhost';
+	private $dbname = 'meu_blog';
+	private $user = 'root';
+	private $passwd = '';
+
+	//variável para a conexão
+	private $conexao;
+
+	public function getConexao() {
+		//estabelecer uma conexão e retornar a variável com a conexão
+		$this->conexao = null;
+
+		try {
+			$this->conexao = new PDO('mysql:host='.$this->host.';dbname='.$this->dbname, $this->user, $this->passwd);
+		} catch(PDOException $e) {
+			echo "Erro na conexão: " . $e->getMessage();
+		}
+
+		return $this->conexao;
+	}
 }

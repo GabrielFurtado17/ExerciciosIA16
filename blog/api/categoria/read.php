@@ -1,36 +1,25 @@
 <?php
-header('Content-Type: application/json; charset=utf-8');
 
-require_once '../../config/Conexao.php';
-require_once '../../models/Categoria.php';
+	header('Acess-Control-Allow-Origin: *');
+	header('Content-Type: application/json');
+	
+	require_once '../../config/Conexao.php';
+	require_once '../../models/Categoria.php';
 
-if($_SERVER['REQUEST_METHOD']!='GET') die('ERRO: Método errado');
-$db = new Conexao();
-$cat = new Categoria($db->getConexao());
-try{
-    if(isset($_GET['id']) && $_GET['id']>0){
-        $cat->read($_GET['id']);
+	$db = new Conexao();
+	$con = $db->getConexao();
+
+    $categoria = new Categoria($con);
+
+    $resultado = $categoria->read();
+
+    $qtde_cats = sizeof($resultado);
+
+    if($qtde_cats>0){
+        // $arr_categorias = array();
+        // $arr_categorias['data'] = array();
+
+        echo json_encode($resultado);
     }else{
-        $cat->read();
+        echo json_encode(array('mensagem' => 'nenhuma categoria encontrada'));
     }
-
-}catch(PDOException $e){
-    die("ERRO: ".$e->getMessage());
-}
-
-
-// try{
-//     $query='SELECT * FROM categoria ';
-
-//     if(isset($_GET['id'])){
-//         $get=$this->conexao->prepare($query. 'WHERE idcategoria=?');
-//         $get->bindParam(1,$_GET['id'],PDO::PARAM_INT);
-//     }else{
-//         $get=$this->conexao->prepare($query);
-//     }
-//     $get->execute();
-//     print_r(($get->fetchAll(PDO::FETCH_ASSOC)));
-//     //return json_encode($get->fetchAll(PDO::FETCH_ASSOC));
-// }catch(PDOException $e){
-//     die("Erro ao ler: ".$e->getMessage());
-// }
