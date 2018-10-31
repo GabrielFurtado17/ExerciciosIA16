@@ -48,8 +48,20 @@ class Post {
 		} else {
 			$consulta = "SELECT * FROM post WHERE id = :id";
 			$stmt = $this->conexao->prepare($consulta);
-			$stmt = $this-> bindParam('id', $id);
+			$stmt-> bindParam('id', $id);
 		}
+		$stmt->execute();
+		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		
+		return $resultado;
+	}
+
+	public function readByCat($idcat) {
+
+		$consulta = "SELECT * FROM post WHERE id_categoria = :id_categoria";
+		$stmt = $this->conexao->prepare($consulta);
+		$stmt-> bindParam('id_categoria', $idcat);
+
 		$stmt->execute();
 		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		

@@ -1,7 +1,7 @@
 <?php
 
 	header('Acess-Control-Allow-Origin: *');
-	header('Content-Type: application/json');
+	header('Content-Type: application/json; charset=utf-8');
 	
 	require_once '../../config/Conexao.php';
 	require_once '../../models/Categoria.php';
@@ -11,6 +11,7 @@
 
     $categoria = new Categoria($con);
 
+    //VERIFICAR SE ESTÁ CHEGANDO UM ID POR GET. SE CHEGAR, DEVER CHAMAR read($id), SENAO, CHAMA read()
     $resultado = $categoria->read();
 
     $qtde_cats = sizeof($resultado);

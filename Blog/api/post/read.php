@@ -10,7 +10,14 @@
         $con = $db->getConexao();
         $dados = json_decode(file_get_contents("php://input"));
         $post = new Post($con);
+        
+//1 - NAO VEM ID, MOSTRA TODOS OS POSTS 
         $resultado = $post->read();
+//2 - VEM ID DO POST, MOSTRA APENAS AQUELE POST
+//        $resultado = $post->read($id);
+//3 - VEM O ID DA CATEGORIA - MOSTRA TODOS OS POSTS DAQUELA CATEGORIA        
+//        $resultado = $post->readByCat($idcat);        
+
         $qtde_post = sizeof($resultado);
 
         if($qtde_post>0){

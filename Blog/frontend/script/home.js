@@ -20,10 +20,27 @@ async function pegarPosts(){
         method: "GET"
     })
 	let respPost = await reqPost.json()
-	respPost.forEach(id => {
-		divpost = document.querySelector("main>section>div:last-child")
-		let titulo = document.querySelector("main>section>div:last-child>div:first-child").innerHTML=(id.titulo)
-		let texto = document.querySelector("main>section>div:last-child>div:last-child").innerHTML=(id.texto)
+	let divPosts = document.querySelector('#posts');
+	respPost.forEach(post => {
+		divPost = document.createElement('div');
+		divPost.setAttribute('class', 'post');
+
+		divtitulo = document.createElement('div');
+		divtitulo.setAttribute('class', 'titulo-post');
+		divtitulo.innerHTML = post.titulo;
+
+		divtexto = document.createElement('div');
+		divtexto.setAttribute('class', 'texto-post');
+		txtTexto = document.createTextNode(post.texto);
+		divtexto.appendChild(txtTexto);
+		
+		divPost.appendChild(divtitulo);
+		divPost.appendChild(divtexto);
+		
+		divPosts.appendChild(divPost);
+		// divpost = document.querySelector("main>section>div:last-child")
+		// let titulo = document.querySelector("main>section>div:last-child>div:first-child").innerHTML=(post.titulo)
+		// let texto = document.querySelector("main>section>div:last-child>div:last-child").innerHTML=(post.texto)
 	})
 	console.log(respPost)
 }
