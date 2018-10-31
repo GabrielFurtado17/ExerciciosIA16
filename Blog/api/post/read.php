@@ -6,18 +6,21 @@
     
     if($_SERVER['REQUEST_METHOD'] == 'GET') {
         
+
         $db = new Conexao();
         $con = $db->getConexao();
         $dados = json_decode(file_get_contents("php://input"));
         $post = new Post($con);
-        
-//1 - NAO VEM ID, MOSTRA TODOS OS POSTS 
-        $resultado = $post->read();
-//2 - VEM ID DO POST, MOSTRA APENAS AQUELE POST
-//        $resultado = $post->read($id);
-//3 - VEM O ID DA CATEGORIA - MOSTRA TODOS OS POSTS DAQUELA CATEGORIA        
-//        $resultado = $post->readByCat($idcat);        
 
+        if(isset($_GET["id"])){
+            $resultado = $post->read($_GET["id"]);
+        }elseif(isset($_GET["id_categoria"])){
+            $resultado = $post->readCat($_GET["id_categoria"]);
+        }else{
+            $resultado = $post->read();
+            
+        }
+        
         $qtde_post = sizeof($resultado);
 
         if($qtde_post>0){

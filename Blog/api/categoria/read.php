@@ -1,26 +1,29 @@
 <?php
 
 	header('Acess-Control-Allow-Origin: *');
-	header('Content-Type: application/json; charset=utf-8');
+	header('Content-Type: application/json');
 	
 	require_once '../../config/Conexao.php';
 	require_once '../../models/Categoria.php';
 
-	$db = new Conexao();
-	$con = $db->getConexao();
+    if($_SERVER['REQUEST_METHOD'] == 'GET') {
+        
+        $db = new Conexao();
+        $con = $db->getConexao();
 
-    $categoria = new Categoria($con);
+        $categoria = new Categoria($con);
+        if(!isset($_GET["id"])){
+            $resultado = $categoria->read();
+        }
+        else{
+            $resultado = $categoria->read($_GET["id"]);
+        }
+        $qtde_cats = sizeof($resultado);
 
-    //VERIFICAR SE ESTÁ CHEGANDO UM ID POR GET. SE CHEGAR, DEVER CHAMAR read($id), SENAO, CHAMA read()
-    $resultado = $categoria->read();
-
-    $qtde_cats = sizeof($resultado);
-
-    if($qtde_cats>0){
-        // $arr_categorias = array();
-        // $arr_categorias['data'] = array();
-
-        echo json_encode($resultado);
-    }else{
-        echo json_encode(array('mensagem' => 'nenhuma categoria encontrada'));
+        if($qtde_cats>0){
+            echo json_encode($resultado, JSON_UNESCAPED_UNICODE);
+        }else{
+            echo json_encode(array('mensagem' => 'nenhuma categoria encontrada'));
+        }
     }
+	

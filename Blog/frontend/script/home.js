@@ -8,41 +8,65 @@ async function pegarDadosCategoria(){
 	let resp = await req.json()
 	resp.forEach(id => {
 		let div = document.createElement('div')
+		div.addEventListener("click",ev=>{
+			alert(div.id);
+			pegarPosts(div.id)
+			// let nomecat = ev.target.innerHTML
+			// let reqPost = await fetch('../api/post/read.php?id'+div.id+'', {
+			// 	method: "GET"
+			// })
+		})
+		div.setAttribute('id', id.id)
 		barraCat.appendChild(div)
 		div.innerHTML=(id.nome)
 	})
 	console.log(resp)
 }
 
-posts = document.querySelector("main>section>div:last-child")
-async function pegarPosts(){
-	let reqPost = await fetch('../api/post/read.php', {
-        method: "GET"
-    })
-	let respPost = await reqPost.json()
-	let divPosts = document.querySelector('#posts');
-	respPost.forEach(post => {
-		divPost = document.createElement('div');
-		divPost.setAttribute('class', 'post');
-
-		divtitulo = document.createElement('div');
-		divtitulo.setAttribute('class', 'titulo-post');
-		divtitulo.innerHTML = post.titulo;
-
-		divtexto = document.createElement('div');
-		divtexto.setAttribute('class', 'texto-post');
-		txtTexto = document.createTextNode(post.texto);
-		divtexto.appendChild(txtTexto);
+async function pegarPosts(idcat=null){
+	if(idcat==null || idcat == ""){
+		let reqPost = await fetch('../api/post/read.php', {
+			method: "GET"
+		})
+		divdosposts = document.querySelector("main > section > div:last-child")
+		let respPost = await reqPost.json()
+		respPost.forEach(id => {
+			let post = document.createElement('div')
+			post.setAttribute('class','post')
+	
+			let titulo = document.createElement('div')
+			titulo.innerHTML = (id.titulo)
+			post.appendChild(titulo)
+	
+			let texto = document.createElement('div')
+			texto.innerHTML = (id.texto)
+			post.appendChild(texto)
+			divdosposts.appendChild(post)
+		})
+		console.log(respPost)
+	}else{
+		let reqPost = await fetch('../api/post/read.php?id_categoria='+idcat+'', {
+			method: "GET"
+		})
+		divdosposts = document.querySelector("main > section > div:last-child")
 		
-		divPost.appendChild(divtitulo);
-		divPost.appendChild(divtexto);
-		
-		divPosts.appendChild(divPost);
-		// divpost = document.querySelector("main>section>div:last-child")
-		// let titulo = document.querySelector("main>section>div:last-child>div:first-child").innerHTML=(post.titulo)
-		// let texto = document.querySelector("main>section>div:last-child>div:last-child").innerHTML=(post.texto)
-	})
-	console.log(respPost)
+		let respPost = await reqPost.json()
+		console.log(respPost)
+		respPost.forEach(id => {
+			let post = document.createElement('div')
+			post.setAttribute('class','post')
+	
+			let titulo = document.createElement('div')
+			titulo.innerHTML = (id.titulo)
+			post.appendChild(titulo)
+	
+			let texto = document.createElement('div')
+			texto.innerHTML = (id.texto)
+			post.appendChild(texto)
+			divdosposts.appendChild(post)
+		})
+	}
+	
 }
 
 pegarPosts()

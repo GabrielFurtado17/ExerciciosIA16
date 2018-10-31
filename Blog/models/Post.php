@@ -55,13 +55,12 @@ class Post {
 		
 		return $resultado;
 	}
-
-	public function readByCat($idcat) {
-
+	public function readCat($id_categoria) {
+		
 		$consulta = "SELECT * FROM post WHERE id_categoria = :id_categoria";
 		$stmt = $this->conexao->prepare($consulta);
-		$stmt-> bindParam('id_categoria', $idcat);
-
+		$stmt-> bindParam('id_categoria', $id_categoria);
+	
 		$stmt->execute();
 		$resultado = $stmt->fetchAll(PDO::FETCH_ASSOC);
 		
