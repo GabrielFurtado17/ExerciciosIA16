@@ -52,11 +52,19 @@ main > section {
 }
 main > section > div:first-child{
     width: 20%;
+    max-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     text-align: center;
     background: #4ECDC4;
+}
+main > section > div:first-child > div:first-child{
+    height: 5vh;
+    font-size: 2.0em;
+    display: flex;
+    background: #036564;
+    flex-direction: column;
 }
 .img {
     margin-top: 2vh;
